@@ -1,9 +1,7 @@
 package controller;
 
 import model.Faculty;
-import model.Student;
 import service.FacultyService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 public class FacultyController {
     private final FacultyService facultyService;
 
@@ -19,7 +17,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id){
         Faculty faculty = facultyService.findFacultyById(id);
         if (faculty == null) {
@@ -28,7 +26,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @PostMapping
+    @PostMapping("/")
     public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.createFaculty(faculty);
     }
