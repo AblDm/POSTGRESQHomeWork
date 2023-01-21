@@ -23,7 +23,7 @@ public class FacultyService {
     }
 
     public Faculty findFacultyById(Long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
     public void deleteFacultyById(Long id) {
         facultyRepository.deleteById(id);
