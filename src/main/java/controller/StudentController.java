@@ -24,6 +24,13 @@ public class StudentController {
     }
 
 
+
+
+    @PostMapping
+    public Student createStudent(@RequestBody Student student) {
+        return studentService.createStudent(student);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
@@ -31,11 +38,6 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
-    }
-
-    @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.createStudent(student);
     }
 
     @PutMapping("{id}")
@@ -46,8 +48,6 @@ public class StudentController {
         }
         return ResponseEntity.ok(studentService.editStudent(student));
     }
-
-
 
     @DeleteMapping("{id}")
     public void deleteStudent(@PathVariable Long id) {
