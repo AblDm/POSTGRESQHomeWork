@@ -1,11 +1,12 @@
-package repository;
+package com.example.postgresqhomework.repository;
 
-import model.Faculty;
+import com.example.postgresqhomework.model.Faculty;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Collection;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+@Repository
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     Faculty findByColor(String color);
     Collection<Faculty> findByName(String name);

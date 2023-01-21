@@ -1,7 +1,8 @@
-package service;
+package com.example.postgresqhomework.service;
 
-import model.Faculty;
-import repository.FacultyRepository;
+import com.example.postgresqhomework.model.Faculty;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.postgresqhomework.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -11,9 +12,11 @@ import java.util.Collection;
 public class FacultyService {
 
     private final FacultyRepository facultyRepository;
+
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
+
 
     public Faculty createFaculty (Faculty faculty) {
         return facultyRepository.save(faculty);

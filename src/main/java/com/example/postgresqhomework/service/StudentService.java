@@ -1,11 +1,10 @@
-package service;
+package com.example.postgresqhomework.service;
 
-import model.Student;
+import com.example.postgresqhomework.model.Student;
 import org.springframework.stereotype.Service;
-import repository.StudentRepository;
+import com.example.postgresqhomework.repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @Service
 public class StudentService  {

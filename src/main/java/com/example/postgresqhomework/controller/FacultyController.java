@@ -1,8 +1,8 @@
-package controller;
+package com.example.postgresqhomework.controller;
 
-import model.Faculty;
+import com.example.postgresqhomework.model.Faculty;
 import org.springframework.http.HttpStatus;
-import service.FacultyService;
+import com.example.postgresqhomework.service.FacultyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +12,12 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
+
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
         this.facultyService = facultyService;
     }
-
 
 
     @PostMapping("/")

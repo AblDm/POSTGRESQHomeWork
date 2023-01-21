@@ -1,15 +1,9 @@
-package controller;
-import model.Faculty;
-import model.Student;
-import repository.StudentRepository;
-import service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
+package com.example.postgresqhomework.controller;
+import com.example.postgresqhomework.model.Student;
+import com.example.postgresqhomework.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/student")
@@ -17,13 +11,9 @@ public class StudentController {
 
     private final StudentService studentService;
 
-
-    StudentController(StudentService studentService,
-                      StudentRepository studentRepository) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
-
-
 
 
     @PostMapping
