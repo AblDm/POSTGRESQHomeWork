@@ -30,10 +30,6 @@ public class FacultyService {
     }
 
     public Faculty editFaculty (Long id, Faculty faculty) {
-        if (!facultyRepository.findAll().contains(id)) {
-            return null;
-        }
-        facultyRepository.deleteById(id);
        return facultyRepository.save(faculty);
     }
 

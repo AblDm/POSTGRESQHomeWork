@@ -27,10 +27,6 @@ public class StudentService  {
 
 
     public Student editStudent(long id, Student student) {
-        if (!studentRepository.findAll().contains(id)) {
-            return null;
-        }
-        studentRepository.deleteById(id);
         return studentRepository.save(student);
     }
 
