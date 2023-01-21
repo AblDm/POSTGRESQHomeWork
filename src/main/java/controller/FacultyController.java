@@ -32,13 +32,8 @@ public class FacultyController {
         return facultyService.createFaculty(faculty);
     }
 
+
     @PutMapping
-    public  ResponseEntity <Faculty> editFaculty (@RequestBody Long id, Faculty faculty){
-        facultyService.deleteFacultyById(id);
-        facultyService.createFaculty(faculty);
-        return ResponseEntity.ok(faculty);
-    }
-    @PutMapping  //PUT http://localhost:8080/faculty/23
     public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
         Faculty foundFaculty = facultyService.editFaculty(faculty);
         if (foundFaculty == null) {
