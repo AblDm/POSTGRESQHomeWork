@@ -35,7 +35,7 @@ public class FacultyService {
 
 
     public Faculty findByColor(String color) {
-        return facultyRepository.findByColor(color).get(Integer.parseInt(color));
+        return facultyRepository.findByColor(color);
         }
     }
 
