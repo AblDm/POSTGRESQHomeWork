@@ -4,6 +4,9 @@ import model.Student;
 import org.springframework.stereotype.Service;
 import repository.StudentRepository;
 
+import java.util.Collection;
+import java.util.Optional;
+
 @Service
 public class StudentService  {
 
@@ -36,4 +39,13 @@ public class StudentService  {
     public void deleteStudent(long id) {
        studentRepository.deleteById(id);
     }
+
+    public Collection<Student> findByAge (int age){
+        return studentRepository.findByAge(age);
+    }
+
+    public Collection<Student> findAllByNameContains (String part){
+        return studentRepository.findAllByNameContains(part);
+    }
+
 }

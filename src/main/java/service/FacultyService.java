@@ -4,6 +4,8 @@ import model.Faculty;
 import repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 
 @Service
 public class FacultyService {
@@ -32,7 +34,13 @@ public class FacultyService {
        return facultyRepository.save(faculty);
     }
 
+    Collection<Faculty> findByName(String name){
+        return facultyRepository.findByName(name);
+    }
 
+    Collection<Faculty> findAllByColorContains (String part){
+        return facultyRepository.findAllByColorContains(part);
+    }
 
     public Faculty findByColor(String color) {
         return facultyRepository.findByColor(color);
