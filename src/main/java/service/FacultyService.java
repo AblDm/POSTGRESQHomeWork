@@ -34,7 +34,7 @@ public class FacultyService {
        return facultyRepository.save(faculty);
     }
 
-    Collection<Faculty> findByName(String name){
+    public Collection<Faculty> findByName(String name){
         return facultyRepository.findByName(name);
     }
 
