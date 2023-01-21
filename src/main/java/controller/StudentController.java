@@ -1,6 +1,7 @@
 package controller;
 import model.Faculty;
 import model.Student;
+import repository.StudentRepository;
 import service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,9 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    StudentController(StudentService studentService) {
+
+    StudentController(StudentService studentService,
+                      StudentRepository studentRepository) {
         this.studentService = studentService;
     }
 
@@ -41,6 +44,8 @@ public class StudentController {
         studentService.createStudent(student);
         return ResponseEntity.ok(student);
     }
+
+
 
     @DeleteMapping("{id}")
     public void deleteStudent(@PathVariable Long id) {

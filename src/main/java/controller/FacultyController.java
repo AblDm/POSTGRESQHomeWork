@@ -1,6 +1,7 @@
 package controller;
 
 import model.Faculty;
+import org.springframework.http.HttpStatus;
 import service.FacultyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,14 @@ public class FacultyController {
         facultyService.createFaculty(faculty);
         return ResponseEntity.ok(faculty);
     }
-
+    @PutMapping  //PUT http://localhost:8080/faculty/23
+    public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
+        Faculty foundFaculty = facultyService.editFaculty(faculty);
+        if (foundFaculty == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(foundFaculty);
+    }
     @DeleteMapping("{id}")
     public void deleteFaculty (@PathVariable Long id){
          facultyService.deleteFacultyById(id);

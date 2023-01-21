@@ -47,5 +47,7 @@ public class StudentService  {
     public Collection<Student> findAllByNameContains (String part){
         return studentRepository.findAllByNameContains(part);
     }
-
+    public Student editStudent(Student student) {
+        return studentRepository.save(student);
+    }
 }

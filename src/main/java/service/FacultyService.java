@@ -45,5 +45,9 @@ public class FacultyService {
     public Faculty findByColor(String color) {
         return facultyRepository.findByColor(color);
         }
+
+    public Faculty editFaculty(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
+}
 
