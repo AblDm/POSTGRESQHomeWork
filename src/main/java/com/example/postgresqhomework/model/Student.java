@@ -15,7 +15,9 @@ public class Student {
     private String name;
     private int age;
 
-
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
 
     public void setId(Long id) {
         this.id = id;

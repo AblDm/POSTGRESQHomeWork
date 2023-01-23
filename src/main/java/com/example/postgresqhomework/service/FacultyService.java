@@ -34,15 +34,15 @@ public class FacultyService {
     }
 
     public Collection<Faculty> findByName(String name){
-        return facultyRepository.findByName(name);
+        return facultyRepository.findByNameIgnoreCase(name);
     }
 
     Collection<Faculty> findAllByColorContains (String part){
-        return facultyRepository.findAllByColorContains(part);
+        return facultyRepository.findAllByColorContainsIgnoreCase(part);
     }
 
     public Faculty findByColor(String color) {
-        return facultyRepository.findByColor(color);
+        return facultyRepository.findByColorIgnoreCase(color);
         }
 
     public Faculty editFaculty(Faculty faculty) {

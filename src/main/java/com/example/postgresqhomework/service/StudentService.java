@@ -40,9 +40,17 @@ public class StudentService  {
     }
 
     public Collection<Student> findAllByNameContains (String part){
-        return studentRepository.findAllByNameContains(part);
+        return studentRepository.findAllByNameContainsIgnoreCase(part);
     }
     public Student editStudent(Student student) {
         return studentRepository.save(student);
+    }
+
+    public Collection<Student> findByAgeBetween (int age1, int age2){
+        return studentRepository.findStudentByAgeIsBetween (age1, age2);
+    }
+
+    public Collection<Student> findByColorOrName(String part) {
+        return studentRepository.findAllByNameContainsIgnoreCase(part);
     }
 }
