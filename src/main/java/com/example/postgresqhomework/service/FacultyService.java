@@ -1,6 +1,8 @@
 package com.example.postgresqhomework.service;
 
 import com.example.postgresqhomework.model.Faculty;
+import com.example.postgresqhomework.model.Student;
+import com.example.postgresqhomework.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.postgresqhomework.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,12 @@ import java.util.Collection;
 public class FacultyService {
 
     private final FacultyRepository facultyRepository;
+    private final StudentRepository studentRepository;
 
-    public FacultyService(FacultyRepository facultyRepository) {
+    public FacultyService(FacultyRepository facultyRepository,
+                          StudentRepository studentRepository) {
         this.facultyRepository = facultyRepository;
+        this.studentRepository = studentRepository;
     }
 
 
@@ -47,6 +52,10 @@ public class FacultyService {
 
     public Faculty editFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
+    }
+
+    public Collection<Student> findStudentsByFacultyId(Long id){
+        return studentRepository.findStudentsByFacultyId(id);
     }
 }
 

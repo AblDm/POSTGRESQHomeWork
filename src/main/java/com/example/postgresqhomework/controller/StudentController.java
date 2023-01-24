@@ -21,12 +21,12 @@ public class StudentController {
     }
 
 
-    @PostMapping
+    @PostMapping //POST http://localhost:8080/student
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{id}") //GET http://localhost:8080/student
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
         if (student == null) {
@@ -35,7 +35,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("ageFilter/{ageMin},{ageMax}")
+    @GetMapping("ageFilter")//GET http://localhost:8080/student/ageFilter
     public ResponseEntity<Collection<Student>> findStudentsByAgeBetween (@RequestParam Integer ageMin,
                                                                          @RequestParam Integer ageMax) {
        if (ageMax!=null && ageMin!=null && ageMin<ageMax){
@@ -43,8 +43,11 @@ public class StudentController {
 
         return ResponseEntity.ok(Collections.emptyList());
     }
-
-    @PutMapping("{id}")
+    @GetMapping(path = "{id}/faculty")//GET http://localhost:8080/student/{id}/faculty
+    public ResponseEntity<Faculty> getFacultyById(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.findFaculty(id));
+    }
+    @PutMapping("{id}")//GET http://localhost:8080/student/{id}
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student foundStudent = studentService.findStudent(student.getId());
         if (foundStudent == null) {
@@ -54,10 +57,11 @@ public class StudentController {
         return ResponseEntity.ok(studentService.editStudent(student));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}")//GET http://localhost:8080/student/{id}
     public ResponseEntity deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
+
 
 }

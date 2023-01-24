@@ -1,6 +1,7 @@
 package com.example.postgresqhomework.controller;
 
 import com.example.postgresqhomework.model.Faculty;
+import com.example.postgresqhomework.model.Student;
 import org.springframework.http.HttpStatus;
 import com.example.postgresqhomework.service.FacultyService;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,10 @@ public class FacultyController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(faculty);
+    }
+    @GetMapping("{id}/students")
+    public ResponseEntity <Collection<Student>> getStudentsOnFaculty(@PathVariable Long id){
+        return ResponseEntity.ok(facultyService.findStudentsByFacultyId(id));
     }
     @PutMapping
     public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {

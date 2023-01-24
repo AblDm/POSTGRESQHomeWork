@@ -1,6 +1,8 @@
 package com.example.postgresqhomework.service;
 
+import com.example.postgresqhomework.model.Faculty;
 import com.example.postgresqhomework.model.Student;
+import com.example.postgresqhomework.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 import com.example.postgresqhomework.repository.StudentRepository;
 
@@ -11,9 +13,14 @@ public class StudentService  {
 
 
     private final StudentRepository studentRepository;
+    private final FacultyRepository facultyRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+
+    public StudentService(StudentRepository studentRepository,
+                          FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
+
+        this.facultyRepository = facultyRepository;
     }
 
     public Student createStudent(Student student) {
@@ -52,5 +59,9 @@ public class StudentService  {
 
     public Collection<Student> findByColorOrName(String part) {
         return studentRepository.findAllByNameContainsIgnoreCase(part);
+    }
+
+    public Faculty findFaculty(Long id) {
+        return facultyRepository.findFacultyByStudentsId(id);
     }
 }
