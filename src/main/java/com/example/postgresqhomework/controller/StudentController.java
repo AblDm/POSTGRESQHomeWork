@@ -2,7 +2,7 @@ package com.example.postgresqhomework.controller;
 import com.example.postgresqhomework.model.Avatar;
 import com.example.postgresqhomework.model.Faculty;
 import com.example.postgresqhomework.model.Student;
-import com.example.postgresqhomework.service.AvatarService;
+import com.example.postgresqhomework.service.AvatarServiceI;
 import com.example.postgresqhomework.service.StudentService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,11 +25,11 @@ import java.util.Collections;
 public class StudentController {
 
     private final StudentService studentService;
-    private final AvatarService avatarService;
+    private final AvatarServiceI avatarServiceI;
 
-    public StudentController(StudentService studentService, AvatarService avatarService) {
+    public StudentController(StudentService studentService, AvatarServiceI avatarServiceI) {
         this.studentService = studentService;
-        this.avatarService = avatarService;
+        this.avatarServiceI = avatarServiceI;
     }
 
 
@@ -80,31 +80,11 @@ public class StudentController {
         if (file.getSize()> 1024 * 300){
             return ResponseEntity.badRequest().body("File is too big");
         }
-        avatarService.uploadAvatar(id, file);
+        avatarServiceI.uploadAvatar(id, file);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/{id}/avatars/preview")
-    public ResponseEntity<byte[]> downloadAvatar (@PathVariable Long id){
-        Avatar avatar = avatarService.findAvatar(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
-        headers.setContentLength(avatar.getPreview().length);
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getPreview());
 
-    }
 
-    @GetMapping (value = "/{id}/avatars")
-    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
-        Avatar avatar = avatarService.findAvatar(id);
 
-        Path path = Path.of(avatar.getFilePath());
-        try (InputStream is = Files.newInputStream(path);
-             OutputStream os = response.getOutputStream();) {
-            response.setStatus(200);
-            response.setContentType(avatar.getMediaType());
-            response.setContentLength((int) avatar.getFileSize());
-            is.transferTo(os);
-        }
-    }
 }

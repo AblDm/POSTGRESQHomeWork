@@ -23,7 +23,7 @@ public class Avatar {
 
     private String mediaType;
     @Lob
-    private byte[] preview;
+    private byte[] data;
 
     @OneToOne
     private Student student;
@@ -62,12 +62,12 @@ public class Avatar {
         this.mediaType = mediaType;
     }
 
-    public byte[] getPreview() {
-        return preview;
+    public byte[] getData() {
+        return data;
     }
 
-    public void setPreview(byte[] preview) {
-        this.preview = preview;
+    public void setData(byte[] data) {
+        this.data = data;
     }
 
 
@@ -77,13 +77,13 @@ public class Avatar {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Avatar avatar = (Avatar) o;
-        return fileSize == avatar.fileSize && Objects.equals(id, avatar.id) && Objects.equals(filePath, avatar.filePath) && Objects.equals(mediaType, avatar.mediaType) && Arrays.equals(preview, avatar.preview) && Objects.equals(student, avatar.student);
+        return fileSize == avatar.fileSize && Objects.equals(id, avatar.id) && Objects.equals(filePath, avatar.filePath) && Objects.equals(mediaType, avatar.mediaType) && Arrays.equals(data, avatar.data) && Objects.equals(student, avatar.student);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(id, filePath, fileSize, mediaType, student);
-        result = 31 * result + Arrays.hashCode(preview);
+        result = 31 * result + Arrays.hashCode(data);
         return result;
     }
 

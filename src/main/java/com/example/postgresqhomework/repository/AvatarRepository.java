@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface AvatarRepository extends JpaRepository<Avatar, Long> {
-    Optional<Avatar> findById(Long aLong);
+    Optional<Avatar> findByStudentId(Long id);
 }
