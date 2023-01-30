@@ -28,7 +28,7 @@ public class FacultyService {
     }
 
     public Faculty findFacultyById(Long id) {
-        return facultyRepository.findById(id).orElse(null);
+       return facultyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("NotFoundEntity")) ;
     }
     public void deleteFacultyById(Long id) {
         facultyRepository.deleteById(id);

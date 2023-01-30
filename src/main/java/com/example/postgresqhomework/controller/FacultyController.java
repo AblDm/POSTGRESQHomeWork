@@ -2,6 +2,7 @@ package com.example.postgresqhomework.controller;
 
 import com.example.postgresqhomework.model.Faculty;
 import com.example.postgresqhomework.model.Student;
+import com.example.postgresqhomework.repository.FacultyRepository;
 import org.springframework.http.HttpStatus;
 import com.example.postgresqhomework.service.FacultyService;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,12 @@ import java.util.Collections;
 public class FacultyController {
 
     private final FacultyService facultyService;
+    private final FacultyRepository facultyRepository;
 
-    public FacultyController(FacultyService facultyService) {
+    public FacultyController(FacultyService facultyService,
+                             FacultyRepository facultyRepository) {
         this.facultyService = facultyService;
+        this.facultyRepository = facultyRepository;
     }
 
 
@@ -28,11 +32,7 @@ public class FacultyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id){
-        Faculty faculty = facultyService.findFacultyById(id);
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(facultyService.findFacultyById(id));
     }
     @GetMapping("{id}/students")
     public ResponseEntity <Collection<Student>> getStudentsOnFaculty(@PathVariable Long id){
@@ -43,8 +43,7 @@ public class FacultyController {
         Faculty foundFaculty = facultyService.editFaculty(faculty);
         if (foundFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.ok(foundFaculty);
+        }   return ResponseEntity.ok(foundFaculty);
     }
     @DeleteMapping("{id}")
     public ResponseEntity deleteFaculty (@PathVariable Long id){
