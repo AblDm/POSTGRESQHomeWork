@@ -5,6 +5,8 @@ import com.example.postgresqhomework.model.Student;
 import com.example.postgresqhomework.repository.AvatarRepository;
 import com.example.postgresqhomework.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -92,4 +94,8 @@ public class AvatarServiceI implements AvatarService{
         return filename.substring(filename.lastIndexOf(".")+1);
     }
 
+    public Page<Avatar> getAllAvatars(Integer page, Integer size){
+        PageRequest pageRequest = PageRequest.of(page-1, size);
+        return avatarRepository.findAll(pageRequest);
+    }
 }

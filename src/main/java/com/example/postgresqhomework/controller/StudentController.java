@@ -4,6 +4,7 @@ import com.example.postgresqhomework.model.Faculty;
 import com.example.postgresqhomework.model.Student;
 import com.example.postgresqhomework.service.AvatarServiceI;
 import com.example.postgresqhomework.service.StudentService;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -75,7 +76,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = "/{id}/avatars",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/{id}/avatars",consumes = MediaType.MULTIPART_FORM_DATA_VALUE) //POST http://localhost:8080/student/23/avatars
     public ResponseEntity<String> uploadAvatar (@PathVariable Long id, @RequestParam MultipartFile file) throws IOException {
         if (file.getSize()> 1024 * 300){
             return ResponseEntity.badRequest().body("File is too big");
@@ -84,7 +85,20 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping(path = "/count")  //GET http://localhost:8080/student/count
+    public ResponseEntity<Integer> studentsCount() {
+        return ResponseEntity.ok(studentService.getCount());
+    }
 
+    @GetMapping(path = "/avg-age")  //GET http://localhost:8080/student/avg-age
+    public ResponseEntity<Double> studentsAvgAge() {
+        return ResponseEntity.ok(studentService.getAverageAgeStuds());
+    }
+
+    @GetMapping(path = "/last-five")  //GET http://localhost:8080/student/last-five
+    public ResponseEntity<Collection<Student>> lastFiveStuds(){
+        return ResponseEntity.ok(studentService.lastFiveStuds());
+    }
 
 
 }

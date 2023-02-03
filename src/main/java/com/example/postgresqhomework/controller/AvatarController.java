@@ -2,14 +2,12 @@ package com.example.postgresqhomework.controller;
 
 import com.example.postgresqhomework.model.Avatar;
 import com.example.postgresqhomework.service.AvatarServiceI;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,7 +25,7 @@ public class AvatarController {
         this.avatarServiceI = avatarServiceI;
     }
 
-    @GetMapping(value = "/{id}/avatar/preview")
+    @GetMapping(value = "/{id}/avatar/preview") //GET  http://localhost:8080/avatar/23/avatar/preview
     public ResponseEntity<byte[]> downloadAvatar (@PathVariable Long id){
         Avatar avatar = avatarServiceI.findAvatar(id);
 
@@ -37,7 +35,7 @@ public class AvatarController {
         headers.setContentLength(avatar.getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
     }
-    @GetMapping (value = "/{id}/avatar")
+    @GetMapping (value = "/{id}/avatar") //GET  http://localhost:8080/avatar/23/avatar
     public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Avatar avatar = avatarServiceI.findAvatar(id);
 
@@ -50,5 +48,11 @@ public class AvatarController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping //GET  http://localhost:8080/avatar
+    public ResponseEntity<Page<Avatar>> getAvatarsList(@RequestParam(required = false, defaultValue = "1") Integer page ,
+                                                       @RequestParam (required = false, defaultValue = "2") Integer size) {
+        return ResponseEntity.ok(avatarServiceI.getAllAvatars(page, size));
     }
 }

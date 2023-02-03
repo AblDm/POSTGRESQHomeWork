@@ -1,5 +1,7 @@
 package com.example.postgresqhomework.model;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.jpa.repository.Query;
+
 import javax.persistence.*;
 import java.util.Objects;
 @Entity
@@ -96,6 +98,5 @@ public class Student {
     public int hashCode() {
         return Objects.hash(id, name, age);
     }
-
 
 }

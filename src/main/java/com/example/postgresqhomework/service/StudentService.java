@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.example.postgresqhomework.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentService  {
@@ -63,5 +64,17 @@ public class StudentService  {
 
     public Faculty findFaculty(Long id) {
         return facultyRepository.findFacultyByStudentsId(id);
+    }
+
+    public Integer getCount() {
+        return studentRepository.getCount();
+    }
+
+    public Double getAverageAgeStuds (){
+        return studentRepository.getAverageAgeStuds();
+    };
+
+    public Collection<Student> lastFiveStuds(){
+        return studentRepository.listLastFiveStuds();
     }
 }
