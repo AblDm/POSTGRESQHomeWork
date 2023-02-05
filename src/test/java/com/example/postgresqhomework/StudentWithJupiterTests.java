@@ -37,7 +37,7 @@ class StudentWithJupiterTests {
                 .isEqualTo("web app is working");
     }
     @Test
-    public void testDefaultGetBooks()  throws Exception {
+    public void testDefaultGetStudent()  throws Exception {
         Assertions
                 .assertThat(this.restTemplate.getForObject("http://localhost:"+ port +"/student", String.class))
                 .isNotNull();
@@ -45,8 +45,6 @@ class StudentWithJupiterTests {
 
     @Test
     public void testPostBooks() throws Exception {
-
-
         student.setName(name);
         student.setAge(age);
         student.setId(id);
@@ -54,8 +52,5 @@ class StudentWithJupiterTests {
         Assertions
                 .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", student, String.class))
                 .isNotNull();
-
     }
-
-
 }

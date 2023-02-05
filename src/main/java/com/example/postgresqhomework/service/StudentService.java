@@ -3,6 +3,8 @@ package com.example.postgresqhomework.service;
 import com.example.postgresqhomework.model.Faculty;
 import com.example.postgresqhomework.model.Student;
 import com.example.postgresqhomework.repository.FacultyRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.postgresqhomework.repository.StudentRepository;
 
@@ -76,5 +78,9 @@ public class StudentService  {
 
     public Collection<Student> lastFiveStuds(){
         return studentRepository.listLastFiveStuds();
+    }
+
+    public Page<Student> getStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 }

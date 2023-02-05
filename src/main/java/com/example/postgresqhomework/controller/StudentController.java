@@ -5,6 +5,9 @@ import com.example.postgresqhomework.model.Student;
 import com.example.postgresqhomework.service.AvatarServiceI;
 import com.example.postgresqhomework.service.StudentService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -48,7 +51,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("ageFilter")//GET http://localhost:8080/student/ageFilter
+    @GetMapping("age-filter")//GET http://localhost:8080/student/ageFilter
     public ResponseEntity<Collection<Student>> findStudentsByAgeBetween (@RequestParam Integer ageMin,
                                                                          @RequestParam Integer ageMax) {
        if (ageMax!=null && ageMin!=null && ageMin<ageMax){
@@ -60,6 +63,14 @@ public class StudentController {
     public ResponseEntity<Faculty> getFacultyById(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.findFaculty(id));
     }
+
+    @GetMapping("all-students")//GET http://localhost:8080/student/all-students
+    public Page<Student> getAllStudents(@PageableDefault Pageable pageable) {
+        return studentService.getStudents(pageable);
+    }
+
+
+
     @PutMapping("{id}")//GET http://localhost:8080/student/{id}
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student foundStudent = studentService.findStudent(student.getId());

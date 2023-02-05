@@ -1,5 +1,6 @@
 package com.example.postgresqhomework.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
@@ -12,7 +13,8 @@ public class Faculty {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "faculty")
     private Collection<Student> students;
 
 
