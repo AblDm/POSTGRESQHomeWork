@@ -30,7 +30,7 @@ import com.example.postgresqhomework.repository.StudentRepository;
 import com.example.postgresqhomework.service.StudentService;
 
 @WebMvcTest
-class StudentTests {
+class StudentTestWithMock {
 
     @Autowired
     private MockMvc mockMvc;
