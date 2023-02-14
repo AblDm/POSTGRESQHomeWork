@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Collections;
 import java.util.Optional;
 
-import com.example.postgresqhomework.controller.AvatarController;
 import com.example.postgresqhomework.repository.FacultyRepository;
 import com.example.postgresqhomework.service.AvatarServiceI;
 import com.example.postgresqhomework.service.FacultyService;

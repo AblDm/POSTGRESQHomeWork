@@ -3,6 +3,8 @@ package com.example.postgresqhomework.service;
 import com.example.postgresqhomework.model.Faculty;
 import com.example.postgresqhomework.model.Student;
 import com.example.postgresqhomework.repository.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.postgresqhomework.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
@@ -22,39 +24,43 @@ public class FacultyService {
         this.studentRepository = studentRepository;
     }
 
-
+    private static final Logger logger = LoggerFactory.getLogger(FacultyService.class);
     public Faculty createFaculty (Faculty faculty) {
+        logger.info("Was invoked method \"create faculty\"");
         return facultyRepository.save(faculty);
     }
 
     public Faculty findFacultyById(Long id) {
+        logger.info("Was invoked method \"find faculty by id\"");
        return facultyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("NotFoundEntity")) ;
     }
     public void deleteFacultyById(Long id) {
+        logger.info("Was invoked method \"delete faculty by id\"");
         facultyRepository.deleteById(id);
     }
 
-    public Faculty editFaculty (Long id, Faculty faculty) {
-       return facultyRepository.save(faculty);
-    }
-
     public Collection<Faculty> findByName(String name){
+        logger.info("Was invoked method \"edit faculty \"");
         return facultyRepository.findByNameIgnoreCase(name);
     }
 
     Collection<Faculty> findAllByColorContains (String part){
+        logger.info("Was invoked method \"find faculty by colors contain\"");
         return facultyRepository.findAllByColorContainsIgnoreCase(part);
     }
 
     public Faculty findByColor(String color) {
+        logger.info("Was invoked method \"find faculty by colors\"");
         return facultyRepository.findByColorIgnoreCase(color);
         }
 
     public Faculty editFaculty(Faculty faculty) {
+        logger.info("Was invoked method \"edit faculty \"");
         return facultyRepository.save(faculty);
     }
 
     public Collection<Student> findStudentsByFacultyId(Long id){
+        logger.info("Was invoked method \"find faculty by id\"");
         return studentRepository.findStudentsByFacultyId(id);
     }
 }

@@ -4,6 +4,8 @@ import com.example.postgresqhomework.model.Avatar;
 import com.example.postgresqhomework.model.Student;
 import com.example.postgresqhomework.repository.AvatarRepository;
 import com.example.postgresqhomework.repository.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +41,12 @@ public class AvatarServiceI implements AvatarService{
         this.studentRepository = studentRepository;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(AvatarServiceI.class);
+
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
+        logger.info("Was invoked method \" save new picture\"");
+        logger.error("There is no such directory to save");
+
             Student student = studentRepository.getById(studentId);
             Path filePath = Path.of(avatarsDir, studentId +"."+ getExtension(file.getOriginalFilename()));
             Files.createDirectories(filePath.getParent());
@@ -65,11 +72,13 @@ public class AvatarServiceI implements AvatarService{
 
     @Override
     public Avatar findAvatar(long studentId) {
+        logger.info("Was invoked method for search the avatar by id");
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
 
     private byte[] generateDataForDB(Path filePath) throws IOException{
+
         try (InputStream is = Files.newInputStream(filePath);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream();

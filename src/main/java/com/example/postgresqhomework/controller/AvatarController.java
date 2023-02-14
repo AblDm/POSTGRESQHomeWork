@@ -2,6 +2,7 @@ package com.example.postgresqhomework.controller;
 
 import com.example.postgresqhomework.model.Avatar;
 import com.example.postgresqhomework.service.AvatarServiceI;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
