@@ -12,6 +12,7 @@ import com.example.postgresqhomework.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService  {
@@ -93,4 +94,28 @@ public class StudentService  {
         logger.info("Was invoked method \"pages view students of academy\"");
         return studentRepository.findAll(pageable);
     }
+
+//Создан эндпоинт, который возвращает отсортированные в алфавитном порядке имена всех студентов в верхнем регистре, чье имя начинается на букву А.
+    public List<String> getStudsWhosNamesBeginsWithA() {
+        return studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .sorted()
+                .filter(s->s.charAt(0)== 'А'||s.charAt(0)=='a')
+                .map(s->Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase())
+                .collect(Collectors.toList());
+    }
+
+// Создан эндпоинт, который возвращает средний возраст всех студентов.
+    public Double getAvgAge() {
+        return studentRepository.findAll()
+                .stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElseThrow();
+    }
+
+
+
+
 }

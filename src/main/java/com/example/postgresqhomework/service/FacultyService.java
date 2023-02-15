@@ -5,11 +5,11 @@ import com.example.postgresqhomework.model.Student;
 import com.example.postgresqhomework.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.example.postgresqhomework.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 
 @Service
@@ -63,5 +63,15 @@ public class FacultyService {
         logger.info("Was invoked method \"find faculty by id\"");
         return studentRepository.findStudentsByFacultyId(id);
     }
+
+    //эндпоинт, который возвращает самое длинное название факультета.
+    public String longerFacultyName(){
+        return facultyRepository.findAll()
+                .stream()
+                .max(Comparator.comparing(f -> f.getFacultyName().length()))
+                .map(Faculty::getFacultyName)
+                .orElseThrow();
+    }
+
 }
 

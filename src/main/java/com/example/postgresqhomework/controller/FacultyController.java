@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.IntStream;
+
+import static com.example.postgresqhomework.service.AvatarServiceI.logger;
 
 @RestController
 @RequestMapping("/faculty")
@@ -62,5 +65,28 @@ public class FacultyController {
         }
 
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping(path = "longest-name")  //GET http://localhost:8080/faculty/longest-name
+    public ResponseEntity<String> mostLongestFacultyName(){
+        return ResponseEntity.ok(facultyService.longerFacultyName());
+    }
+
+
+    @GetMapping(path = "/getValue")   //GET http://localhost:8080/getValue
+    public ResponseEntity<StringBuffer> getValue() {
+        long startTime = System.currentTimeMillis();
+
+        int sum = IntStream.iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, Integer::sum);
+
+        long endTime = System.currentTimeMillis();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Метод работал ").append(endTime - startTime).append(" ms.")
+                .append("\nСумма: ").append(sum);
+
+        return ResponseEntity.ok(stringBuffer);
     }
 }

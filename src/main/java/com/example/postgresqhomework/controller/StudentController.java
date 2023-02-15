@@ -1,5 +1,4 @@
 package com.example.postgresqhomework.controller;
-import com.example.postgresqhomework.model.Avatar;
 import com.example.postgresqhomework.model.Faculty;
 import com.example.postgresqhomework.model.Student;
 import com.example.postgresqhomework.service.AvatarServiceI;
@@ -8,21 +7,16 @@ import com.example.postgresqhomework.service.StudentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -109,6 +103,17 @@ public class StudentController {
     @GetMapping(path = "/last-five")  //GET http://localhost:8080/student/last-five
     public ResponseEntity<Collection<Student>> lastFiveStuds(){
         return ResponseEntity.ok(studentService.lastFiveStuds());
+    }
+
+    @GetMapping(path = "/name-begins-a")  //GET http://localhost:8080/student/name-begins-a
+    public ResponseEntity<List<String>> studentsWhomNamesBeginsWithA(){
+        return ResponseEntity.ok(studentService.getStudsWhosNamesBeginsWithA());
+    }
+
+    @GetMapping(path = "/avg-age")  //GET http://localhost:8080/student/avg-age
+    public ResponseEntity<Double> avgAge(){
+        return ResponseEntity.ok(studentService.getAvgAge());
+
     }
 
 
