@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.IntStream;
 
-import static com.example.postgresqhomework.service.AvatarServiceI.logger;
 
 @RestController
 @RequestMapping("/faculty")
