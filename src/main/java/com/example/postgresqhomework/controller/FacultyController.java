@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 
 @RestController
@@ -72,14 +73,28 @@ public class FacultyController {
     }
 
 
-    @GetMapping(path = "/getValue")   //GET http://localhost:8080/getValue
+    @GetMapping(path = "/get-value")   //GET http://localhost:8080/get-value
     public ResponseEntity<StringBuffer> getValue() {
         long startTime = System.currentTimeMillis();
 
-        int sum = IntStream.iterate(1, a -> a + 1)
+        long sum = LongStream.iterate(1, a -> a + 1)
                 .limit(1_000_000)
                 .parallel()
-                .reduce(0, Integer::sum);
+                .reduce(0, Long::sum);
+
+        long endTime = System.currentTimeMillis();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Метод работал ").append(endTime - startTime).append(" ms.")
+                .append("\nСумма: ").append(sum);
+
+        return ResponseEntity.ok(stringBuffer);
+    }
+
+    @GetMapping(path = "/get-value-sum")   //GET http://localhost:8080/get-value-sum
+    public ResponseEntity<StringBuffer> getValueSum() {
+        long startTime = System.currentTimeMillis();
+
+        Long sum = ((1_000_000l+1l)*1_000_000l) / 2;
 
         long endTime = System.currentTimeMillis();
         StringBuffer stringBuffer = new StringBuffer();
