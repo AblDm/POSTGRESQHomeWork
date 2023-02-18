@@ -128,5 +128,4 @@ public class StudentController {
         studentService.getStudentsSynchronisedPrint();
         return ResponseEntity.ok().build();
     }
-
 }
