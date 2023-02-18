@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 @Repository
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
-    Faculty findByColor(String color);
-    Collection<Faculty> findByName(String name);
-    Collection<Faculty> findAllByColorContains (String part);
-
+    Faculty findByColorIgnoreCase(String color);
+    Collection<Faculty> findByNameIgnoreCase(String name);
+    Collection<Faculty> findAllByColorContainsIgnoreCase (String part);
+    Faculty findFacultyByStudentsId (Long id);
 }

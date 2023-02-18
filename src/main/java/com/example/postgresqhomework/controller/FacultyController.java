@@ -1,6 +1,8 @@
 package com.example.postgresqhomework.controller;
 
 import com.example.postgresqhomework.model.Faculty;
+import com.example.postgresqhomework.model.Student;
+import com.example.postgresqhomework.repository.FacultyRepository;
 import org.springframework.http.HttpStatus;
 import com.example.postgresqhomework.service.FacultyService;
 import org.springframework.http.ResponseEntity;
@@ -8,15 +10,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+
 
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
 
     private final FacultyService facultyService;
+    private final FacultyRepository facultyRepository;
 
-    public FacultyController(FacultyService facultyService) {
+    public FacultyController(FacultyService facultyService,
+                             FacultyRepository facultyRepository) {
         this.facultyService = facultyService;
+        this.facultyRepository = facultyRepository;
     }
 
 
@@ -27,19 +35,18 @@ public class FacultyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id){
-        Faculty faculty = facultyService.findFacultyById(id);
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(facultyService.findFacultyById(id));
+    }
+    @GetMapping("{id}/students")
+    public ResponseEntity <Collection<Student>> getStudentsOnFaculty(@PathVariable Long id){
+        return ResponseEntity.ok(facultyService.findStudentsByFacultyId(id));
     }
     @PutMapping
     public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
         Faculty foundFaculty = facultyService.editFaculty(faculty);
         if (foundFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.ok(foundFaculty);
+        }   return ResponseEntity.ok(foundFaculty);
     }
     @DeleteMapping("{id}")
     public ResponseEntity deleteFaculty (@PathVariable Long id){
@@ -48,7 +55,8 @@ public class FacultyController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam String color, @RequestParam String name) {
+    public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color,
+                                                             @RequestParam(required = false) String name) {
         if (color != null && !color.isBlank()) {
             return ResponseEntity.ok(Collections.singleton(facultyService.findByColor(color)));
         }
@@ -57,5 +65,42 @@ public class FacultyController {
         }
 
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping(path = "longest-name")  //GET http://localhost:8080/faculty/longest-name
+    public ResponseEntity<String> mostLongestFacultyName(){
+        return ResponseEntity.ok(facultyService.longerFacultyName());
+    }
+
+
+    @GetMapping(path = "/get-value")   //GET http://localhost:8080/get-value
+    public ResponseEntity<StringBuffer> getValue() {
+        long startTime = System.currentTimeMillis();
+
+        long sum = LongStream.iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, Long::sum);
+
+        long endTime = System.currentTimeMillis();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Метод работал ").append(endTime - startTime).append(" ms.")
+                .append("\nСумма: ").append(sum);
+
+        return ResponseEntity.ok(stringBuffer);
+    }
+
+    @GetMapping(path = "/get-value-sum")   //GET http://localhost:8080/get-value-sum
+    public ResponseEntity<StringBuffer> getValueSum() {
+        long startTime = System.currentTimeMillis();
+
+        Long sum = ((1_000_000l+1l)*1_000_000l) / 2;
+
+        long endTime = System.currentTimeMillis();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Метод работал ").append(endTime - startTime).append(" ms.")
+                .append("\nСумма: ").append(sum);
+
+        return ResponseEntity.ok(stringBuffer);
     }
 }

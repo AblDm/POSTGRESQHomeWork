@@ -1,5 +1,7 @@
 package com.example.postgresqhomework.model;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.jpa.repository.Query;
+
 import javax.persistence.*;
 import java.util.Objects;
 @Entity
@@ -15,18 +17,36 @@ public class Student {
     private String name;
     private int age;
 
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
 
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Student(long id, String name, int age) {
+    public Student(Long id, String name, int age) {
 
             this.id = id;
             this.name = name;
             this.age = age;
         }
+
+    public Student(Long id, String name, int age, Faculty faculty) {
+
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.faculty = faculty;
+    }
 
     public Student() {
 
@@ -78,4 +98,5 @@ public class Student {
     public int hashCode() {
         return Objects.hash(id, name, age);
     }
+
 }
