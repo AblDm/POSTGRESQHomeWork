@@ -116,5 +116,17 @@ public class StudentController {
 
     }
 
+    @GetMapping(path = "/sout-studs")  //GET http://localhost:8080/student/sout-studs
+    public ResponseEntity<String> studentsList(){
+        studentService.getStudentsPrint();
+        return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping(path = "/sout-studs1")  //GET http://localhost:8080/student/sout-studs1
+    public ResponseEntity<String> studentsList1(){
+        studentService.getStudentsSynchronisedPrint();
+        return ResponseEntity.ok().build();
+    }
 
 }
